@@ -1,0 +1,69 @@
+class Queue:
+    def __init__(self, size):
+        self.queue = [None] * size  # Create an array of fixed size
+        self.max_size = size  # Maximum size of the queue
+        self.front = -1  # Indicates the front of the queue
+        self.rear = -1  # Indicates the rear of the queue
+
+    # Check if the queue is full
+    def is_full(self):
+        return self.rear == self.max_size - 1
+
+    # Check if the queue is empty
+    def is_empty(self):
+        return self.front == -1 or self.front > self.rear
+
+    # Add an element to the queue (enqueue)
+    def enqueue(self, item):
+        if self.is_full():
+            print("Queue is full. Cannot enqueue.")
+        else:
+            if self.front == -1:
+                self.front = 0  # Set front if this is the first enqueue
+            self.rear += 1
+            self.queue[self.rear] = item
+            print(f"Enqueued: {item}")
+
+    # Remove an element from the queue (dequeue)
+    def dequeue(self):
+        if self.is_empty():
+            print("Queue is empty. Cannot dequeue.")
+        else:
+            dequeued_item = self.queue[self.front]
+            print(f"Dequeued: {dequeued_item}")
+            self.front += 1
+            if self.front > self.rear:  # Reset queue if empty after dequeue
+                self.front = self.rear = -1
+            return dequeued_item
+
+    # Display the current elements in the queue
+    def display(self):
+        if self.is_empty():
+            print("Queue is empty.")
+        else:
+            print("Queue elements:", self.queue[self.front:self.rear + 1])
+
+# Testing the Queue implementation
+if __name__ == "__main__":
+    queue_size = 5
+    queue = Queue(queue_size)
+
+    # Enqueue elements
+    queue.enqueue(10)
+    queue.enqueue(20)
+    queue.enqueue(30)
+    queue.enqueue(40)
+    queue.enqueue(50)
+
+    # Display the queue
+    queue.display()
+
+    # Try to enqueue when the queue is full
+    queue.enqueue(60)
+
+    # Dequeue elements
+    queue.dequeue()
+    queue.dequeue()
+
+    # Display the queue again after dequeues
+    queue.display()
