@@ -1,0 +1,40 @@
+from queue import Queue
+
+class LiftManagementSystem:
+    def __init__(self, total_floors):
+        self.current_floor = 0  # Assuming lift starts at ground floor (0)
+        self.queue = Queue()  # To handle floor requests
+        self.total_floors = total_floors
+
+    def request_floor(self, floor):
+        if floor < 0 or floor >= self.total_floors:
+            print(f"Invalid floor request: {floor}. Please request a valid floor.")
+        else:
+            print(f"Floor {floor} requested.")
+            self.queue.put(floor)
+
+    def move_lift(self):
+        while not self.queue.empty():
+            requested_floor = self.queue.get()
+            print(f"Lift moving from floor {self.current_floor} to floor {requested_floor}...")
+            self.current_floor = requested_floor
+            print(f"Lift has reached floor {self.current_floor}.")
+
+    def get_current_floor(self):
+        return self.current_floor
+
+
+# Simulating the Lift Management System
+if __name__ == "__main__":
+    # Create a lift system for a building with 10 floors (0 to 9)
+    lift_system = LiftManagementSystem(total_floors=10)
+
+    # Requesting floors
+    lift_system.request_floor(3)
+    lift_system.request_floor(7)
+    lift_system.request_floor(2)
+    
+    # Processing the requested floors
+    lift_system.move_lift()
+    
+    print(f"Lift is currently at floor {lift_system.get_current_floor()}.")
